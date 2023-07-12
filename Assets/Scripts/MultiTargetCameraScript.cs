@@ -4,10 +4,9 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[ RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(Camera))]
 public class MultiTargetCameraScript : MonoBehaviour
 {
-
     public List<Transform> targets; // list of players
 
     public Vector3 offset;
@@ -17,10 +16,8 @@ public class MultiTargetCameraScript : MonoBehaviour
     public float maxZoom = 10f;
     public float zoomLimiter = 50f;
 
-
     private Vector3 velocity;
     private Camera cam;
-
 
     private void Start()
     {
@@ -40,31 +37,28 @@ public class MultiTargetCameraScript : MonoBehaviour
 
     void Move()
     {
-        
-        Vector3 centerPoint = GetCenterPoint(); // gets centre point of all players
-
+        Vector3 centerPoint = GetCenterPoint(); // gets center point of all players
         Vector3 newPosition = centerPoint + offset; // adds offset
-
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime); // smoothing
     }
 
     void Zoom()
     {
-        //Debug.Log( GetGreatestDistance() );
-
         float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomLimiter);
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView,newZoom,Time.deltaTime);
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newZoom, Time.deltaTime);
     }
 
     float GetGreatestDistance()
     {
-        var Bounds = new Bounds(targets[0].position, Vector3.zero);
-        for(int i =0; i < targets.Count; i++)
+        var bounds = new Bounds(targets[0].position, Vector3.zero);
+        for (int i = 0; i < targets.Count; i++)
         {
-            Bounds.Encapsulate(targets[i].position);
+            bounds.Encapsulate(targets[i].position);
         }
-        return Bounds.size.x;
+        float greatestDistance = Mathf.Max(bounds.size.x, bounds.size.y * 2); // get the maximum of width and height
+        return greatestDistance;
     }
+
 
     Vector3 GetCenterPoint()
     {
@@ -73,7 +67,6 @@ public class MultiTargetCameraScript : MonoBehaviour
         {
             return targets[0].position;
         }
-
         // creates a rectangle around the players
         var bounds = new Bounds(targets[0].position, Vector3.zero);
         for (int i = 0; i < targets.Count; i++)
@@ -81,6 +74,6 @@ public class MultiTargetCameraScript : MonoBehaviour
             bounds.Encapsulate(targets[i].position);
         }
         // returns the center of the rectangle 
-        return bounds.center; 
+        return bounds.center;
     }
 }
