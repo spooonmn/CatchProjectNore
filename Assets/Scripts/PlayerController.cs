@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         // Player jumping
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0f, jumpForce * Time.deltaTime), ForceMode2D.Impulse);
             isJumping = true;
             jumpTime = 0f;
         }
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         {
             if (jumpTime < maxJumpTime)
             {
-                rb.AddForce(new Vector2(0f, jumpForce * jumpTimeMultiplier), ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(0f, jumpForce * jumpTimeMultiplier * Time.deltaTime), ForceMode2D.Impulse);
                 jumpTime += Time.deltaTime;
             }
         }
