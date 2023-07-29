@@ -980,11 +980,7 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 7
   jumpForce: 100
-<<<<<<< Updated upstream
   maxJumpTime: 0.3
-=======
-  maxJumpTime: 0.2
->>>>>>> Stashed changes
   jumpTimeMultiplier: 0.3
   groundCheck: {fileID: 1807634801}
   groundLayer:
